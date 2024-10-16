@@ -16,7 +16,7 @@ class City {
 class HistoryService {
   // DONE: Define a read method that reads from the searchHistory.json file
   private async read() {
-    return await fs.readFile('db/searchHistory.json', {
+    return await fs.readFile('db/db.json', {
       flag: 'a+',
       encoding: 'utf-8'
     });
@@ -24,10 +24,10 @@ class HistoryService {
 
   // DONE: Define a write method that writes the updated cities array to the searchHistory.json file
   private async write(cities: City[]) {
-    return await fs.writeFile('db/seacrhHistory.json', JSON.stringify(cities, null, '\t'));
+    return await fs.writeFile('db/db.json', JSON.stringify(cities, null, '\t'));
   }
 
-  // DONE: Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects
+  // DONE: Define a getCities method that reads the cities from the db.json file and returns them as an array of City objects
   async getCities() {
     return await this.read().then((cities) => {
       let parsedCities: City[];
@@ -49,13 +49,13 @@ class HistoryService {
     if (!city) {
       throw new Error('Could not add city');
     }
-
+  
     const newCity: City = { name: city, id: uuidv4() };
-
+    //console.log(newCity);
     // Get all the current cities, add the new city, write all the updated cities, return the newCity
 
     return await this.getCities()
-      // Check if the city is already in the searchHistory.json file
+      // Check if the city is already in the db.json file
       .then((cities) => {
         if (cities.find((index) => index.name === city)) {
           return cities;
