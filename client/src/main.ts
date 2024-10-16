@@ -45,10 +45,15 @@ const fetchWeather = async (cityName: string) => {
 
   const weatherData = await response.json();
 
-  console.log('weatherData: ', weatherData);
+  //console.log('weatherData: from fetchWeather of main.ts', weatherData);
+  //console.log('weatherData[0]: from fetchWeather of main.ts', weatherData[0]);
 
-  renderCurrentWeather(weatherData[0]);
-  renderForecast(weatherData.slice(1));
+  //let forecast = weatherData[0].fiveDayForecast;
+  //console.log('test from line 52 of main.ts in client: ', forecast);
+  //console.log(forecast.length);
+  
+  renderCurrentWeather(weatherData[0].currentForecast);
+  renderForecast(weatherData[0].fiveDayForecast);
 };
 
 const fetchSearchHistory = async () => {
@@ -77,6 +82,7 @@ Render Functions
 */
 
 const renderCurrentWeather = (currentWeather: any): void => {
+  //console.log('currentWeather: ', currentWeather);
   const { city, date, icon, iconDescription, tempF, windSpeed, humidity } =
     currentWeather;
 
@@ -100,6 +106,7 @@ const renderCurrentWeather = (currentWeather: any): void => {
 };
 
 const renderForecast = (forecast: any): void => {
+  //console.log('renderForecast: ', forecast);
   const headingCol = document.createElement('div');
   const heading = document.createElement('h4');
 
